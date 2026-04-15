@@ -1,7 +1,4 @@
-package com.br.jheicanama.freelancer.desktop.view;
-
-import com.br.jheicanama.freelancer.desktop.view.cadastro.CadastroCandidatoView;
-import com.br.jheicanama.freelancer.desktop.view.cadastro.CadastroContratanteView;
+package com.br.jheicanama.freelancer.desktop.view.cadastro;
 
 import javax.swing.*;
 import java.awt.*;

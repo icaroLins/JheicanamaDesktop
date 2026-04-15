@@ -7,6 +7,8 @@ import com.br.jheicanama.freelancer.desktop.repository.job.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class JobService {
 
@@ -24,19 +26,65 @@ public class JobService {
 
         JobVacancies jobcrate = jobRepository.save(jobVacancies);
 
-        JobResponse jobResponse = new JobResponse();
-
-        jobResponse.setId(jobcrate.getId());
-        jobResponse.setTitle(jobcrate.getTitle());
-        jobResponse.setDescription(jobcrate.getDescription());
-        jobResponse.setWage(jobcrate.getWage());
-        jobResponse.setArea(jobcrate.getArea());
-        jobResponse.setNameContractor(jobcrate.getContractor().getUsername());
-        jobResponse.setEmpresa(jobcrate.getContractor().getEmpresa());
+        JobResponse jobResponse = new JobResponse(jobcrate.getTitle(),
+                jobcrate.getDescription(), jobcrate.getWage(),jobcrate.getArea(),
+                jobcrate.getId(),jobcrate.getContractor().getUsername(),jobcrate.getContractor().getEmpresa());
 
         return jobResponse;
     }
 
+    public List<JobResponse> listJob() {
+        return jobRepository.findAll().stream().map(response -> new JobResponse(
+                response.getTitle(),
+                response.getDescription(),
+                response.getWage(),
+                response.getArea(),
+                response.getId(),
+                response.getContractor().getUsername(),
+                response.getContractor().getEmpresa())).toList();
+    }
 
+    public JobResponse updateJob(JobRequest jobRequest, Long contractorId, Long jobId) {
+        JobVacancies jobVacancies = jobRepository.findById(jobId)
+                .orElseThrow(() -> new RuntimeException("vaga de emprego não encontrada"));
+        if(!jobVacancies.getContractor().getId().equals(contractorId)){
+            throw new RuntimeException("Você não pode editar essa vaga");
+        }
 
+        JobVacancies job = new JobVacancies();
+        job.setDescription(jobRequest.getDescription());
+        job.setWage(jobRequest.getWage());
+        job.setArea(jobRequest.getArea());
+        job.setTitle(jobRequest.getTitle());
+
+        JobVacancies jobUpdate = jobRepository.save(job);
+
+        JobResponse jobResponse = new JobResponse(jobUpdate.getTitle(),jobUpdate.getDescription(),
+                jobUpdate.getWage(),jobUpdate.getArea(),jobUpdate.getId(),jobUpdate.getContractor().getUsername()
+                ,jobUpdate.getContractor().getEmpresa());
+
+        return jobResponse;
+    }
+
+    public List<JobResponse> listContractorJob(Long contractorId) {
+        return jobRepository.findByContractorId(contractorId).stream()
+                .map( response -> new JobResponse(response.getTitle(),
+                        response.getDescription(),
+                        response.getWage(),
+                        response.getArea(),
+                        response.getId(),
+                        response.getContractor().getUsername(),
+                        response.getContractor().getEmpresa())).toList();
+    }
+
+    public void deleteJob(Long contractorId, Long jobId) {
+        JobVacancies jobVacancies = jobRepository.findById(jobId)
+                .orElseThrow(() -> new RuntimeException("vaga de emprego não encontrada"));
+
+        if(!jobVacancies.getContractor().getId().equals(contractorId)){
+            throw new RuntimeException("Você não pode deletar essa vaga");
+        }
+
+        jobRepository.deleteById(jobId);
+    }
 }

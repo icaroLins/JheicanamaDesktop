@@ -11,4 +11,14 @@ public class JobResponse {
     private Long id;
     private String nameContractor;
     private String empresa;
+
+    public JobResponse(String title, String description, Double wage, String area, Long id, String nameContractor, String empresa) {
+        this.title = title;
+        this.description = description;
+        this.wage = wage;
+        this.area = area;
+        this.id = id;
+        this.nameContractor = nameContractor;
+        this.empresa = empresa;
+    }
 }

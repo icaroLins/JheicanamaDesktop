@@ -8,6 +8,10 @@ import com.br.jheicanama.freelancer.desktop.model.user.User;
 import com.br.jheicanama.freelancer.desktop.section.candidate.CandidateSection;
 import com.br.jheicanama.freelancer.desktop.section.contractor.ContractorSection;
 import com.br.jheicanama.freelancer.desktop.section.user.UserSection;
+import com.br.jheicanama.freelancer.desktop.view.candidacy.MyCandidaciesView;
+import com.br.jheicanama.freelancer.desktop.view.job.JobListCandidateView;
+import com.br.jheicanama.freelancer.desktop.view.job.JobListView;
+import com.br.jheicanama.freelancer.desktop.view.job.JobVacanciesView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -83,13 +87,9 @@ public class DashboardView extends JFrame {
             );
         });
 
-        btnVagas.addActionListener(e ->
-                JOptionPane.showMessageDialog(this, "Tela de vagas (futuro)")
-        );
+        btnVagas.addActionListener(e -> new JobListCandidateView());
 
-        btnAplicacoes.addActionListener(e ->
-                JOptionPane.showMessageDialog(this, "Minhas aplicações (futuro)")
-        );
+        btnAplicacoes.addActionListener(e -> new MyCandidaciesView());
 
         panel.add(new JLabel("Bem-vindo, candidato!", SwingConstants.CENTER));
         panel.add(btnPerfil);
@@ -106,6 +106,7 @@ public class DashboardView extends JFrame {
         JButton btnPerfil = new JButton("Meu Perfil");
         JButton btnCriarVaga = new JButton("Criar Vaga");
         JButton btnGerenciar = new JButton("Gerenciar Candidatos");
+        JButton btnListVagas = new JButton("Listar Vagas");
 
         btnPerfil.addActionListener(e -> {
             Contractor contractor = contractorSection.getContractorLogged();
@@ -116,18 +117,19 @@ public class DashboardView extends JFrame {
             );
         });
 
-        btnCriarVaga.addActionListener(e ->
-                JOptionPane.showMessageDialog(this, "Criar vaga (futuro)")
-        );
+        btnCriarVaga.addActionListener(e -> new JobVacanciesView());
 
         btnGerenciar.addActionListener(e ->
                 JOptionPane.showMessageDialog(this, "Gerenciar candidatos (futuro)")
         );
 
+        btnListVagas.addActionListener(e -> new JobListView());
+
         panel.add(new JLabel("Bem-vindo, contratante!", SwingConstants.CENTER));
         panel.add(btnPerfil);
         panel.add(btnCriarVaga);
         panel.add(btnGerenciar);
+        panel.add(btnListVagas);
 
         return panel;
     }

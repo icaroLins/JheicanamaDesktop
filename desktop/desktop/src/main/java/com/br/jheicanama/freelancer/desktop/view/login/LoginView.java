@@ -10,7 +10,7 @@ import com.br.jheicanama.freelancer.desktop.section.candidate.CandidateSection;
 import com.br.jheicanama.freelancer.desktop.section.contractor.ContractorSection;
 import com.br.jheicanama.freelancer.desktop.section.user.UserSection;
 import com.br.jheicanama.freelancer.desktop.service.user.UserService;
-import com.br.jheicanama.freelancer.desktop.view.ChooseRegistrationView;
+import com.br.jheicanama.freelancer.desktop.view.cadastro.ChooseRegistrationView;
 import com.br.jheicanama.freelancer.desktop.view.dashboard.DashboardView;
 
 import javax.swing.*;
