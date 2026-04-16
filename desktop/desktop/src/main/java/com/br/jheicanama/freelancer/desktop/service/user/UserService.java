@@ -19,10 +19,8 @@ import org.springframework.stereotype.Service;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private UserSection userSection;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -30,33 +28,13 @@ public class UserService {
     @Autowired
     private ContractorRepository contractorRepository;
 
-    public UserResponse cadastrarUser(UserRequest userRequest) {
-        if(userRepository.findByEmail(userRequest.getEmail())!=null) {
-            throw new RuntimeException("Email ja existente");
-        }
 
-        String passworEncrypted =passwordEncoder.encode(userRequest.getPassword());
-
-        User user = new User();
-        user.setEmail(userRequest.getEmail());
-        user.setPassword(passworEncrypted);
-        user.setRole(userRequest.getRole());
-        user.setPhone(userRequest.getPhone());
-        user.setUsername(userRequest.getName());
-
-        User userSaved = userRepository.save(user);
-        UserResponse userResponse = new UserResponse();
-        userResponse.setEmail(userSaved.getEmail());
-        userResponse.setPhone(userSaved.getPhone());
-        userResponse.setRole(userSaved.getRole());
-
-        return userResponse;
-    }
 
     public LoginResponse loginUser(LoginRequest loginRequest) {
 
+        User candidate = new Candidate();
 
-        Candidate candidate = candidateRepository.findByEmail(loginRequest.getEmail());
+        candidate = candidateRepository.findByEmail(loginRequest.getEmail());
 
         if (candidate != null) {
             if (!passwordEncoder.matches(loginRequest.getPassword(), candidate.getPassword())) {
@@ -67,7 +45,9 @@ public class UserService {
             return buildResponse(candidate);
         }
 
-        Contractor contractor = contractorRepository.findByEmail(loginRequest.getEmail());
+        User contractor = new Contractor();
+
+        contractor = contractorRepository.findByEmail(loginRequest.getEmail());
 
         if (contractor != null) {
             if (!passwordEncoder.matches(loginRequest.getPassword(), contractor.getPassword())) {
@@ -93,11 +73,8 @@ public class UserService {
     public UserResponse searchUser(UserRequest userRequest) {
         User user = userRepository.findByEmail(userRequest.getEmail());
 
-        UserResponse userResponse = new UserResponse();
-        userResponse.setEmail(user.getEmail());
-        userResponse.setPhone(user.getPhone());
-        userResponse.setRole(user.getRole());
-        userResponse.setUsername(user.getUsername());
+        UserResponse userResponse = new UserResponse(user.getUsername(),user.getPhone(),
+                user.getEmail(),user.getRole());
         return userResponse;
     }
 

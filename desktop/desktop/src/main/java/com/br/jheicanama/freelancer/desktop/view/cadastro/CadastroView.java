@@ -36,34 +36,8 @@ public class CadastroView  extends JFrame {
         cadastrar.setAlignmentX(Component.CENTER_ALIGNMENT);
         p.add(cadastrar);
 
-        cadastrar.addActionListener(e -> cadastrar());
-
         add(p);
         setVisible(true);
-    }
-
-    protected void cadastrar() {
-        try {
-            UserService service = SpringContext.getBean(UserService.class);
-
-            UserRequest req = new UserRequest();
-            req.setName(name.getText());
-            req.setEmail(email.getText());
-            req.setPassword(new String(password.getPassword()));
-            req.setPhone("000000");
-            req.setRole(definirRole());
-
-            service.cadastrarUser(req);
-
-            JOptionPane.showMessageDialog(this, "Cadastrado com sucesso!");
-
-            new LoginView();
-            dispose();
-
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        }
-
     }
     protected void addCamposExtras(JPanel p) {
 

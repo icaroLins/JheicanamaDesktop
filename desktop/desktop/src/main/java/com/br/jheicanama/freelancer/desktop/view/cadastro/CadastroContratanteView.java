@@ -37,7 +37,6 @@ public class CadastroContratanteView  extends CadastroView {
         return Role.CONTRACTOR;
     }
 
-    @Override
     protected void cadastrar() {
         try {
             ContractorService service = SpringContext.getBean(ContractorService.class);

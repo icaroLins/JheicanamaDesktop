@@ -17,7 +17,8 @@ public class CandidacyResponse {
 
     public CandidacyResponse(Long id, String candidateName,
                              String jobTitle, String jobDescription, Double jobWage,
-                             String jobArea, String contractorName, String contractorEmpresa, StatusCandidacy status) {
+                             String jobArea, String contractorName,
+                             String contractorEmpresa, StatusCandidacy status) {
         this.id = id;
         this.candidateName = candidateName;
         this.jobTitle = jobTitle;
@@ -26,6 +27,18 @@ public class CandidacyResponse {
         this.jobArea = jobArea;
         this.contractorName = contractorName;
         this.contractorEmpresa = contractorEmpresa;
+        this.status = status;
+    }
+
+    public CandidacyResponse(String jobTitle, String contractorEmpresa, StatusCandidacy status) {
+        this.jobTitle = jobTitle;
+        this.contractorEmpresa = contractorEmpresa;
+        this.status = status;
+    }
+
+    public CandidacyResponse(Long id, String candidateName, StatusCandidacy status) {
+        this.id = id;
+        this.candidateName = candidateName;
         this.status = status;
     }
 }

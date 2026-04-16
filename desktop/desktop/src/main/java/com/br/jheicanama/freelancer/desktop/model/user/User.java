@@ -8,7 +8,7 @@ import lombok.Setter;
 @MappedSuperclass
 @Getter
 @Setter
-public class User {
+public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,4 +18,15 @@ public class User {
     private String phone;
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    public User( String username, String password, String email, String phone, Role role) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phone = phone;
+        this.role = role;
+    }
+
+    public User() {
+    }
 }

@@ -14,9 +14,11 @@ public class CandidateSection extends UserSection {
         this.userLogged = user;
     }
 
+
     public boolean isLogado() {
         return userLogged != null;
     }
+
 
     public void logout() {
         this.userLogged = null;

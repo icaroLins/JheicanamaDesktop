@@ -46,9 +46,8 @@ public class CandidacyService {
         JobVacancies jobVacancies = jobRepository.findById(jobId)
                 .orElseThrow(()-> new RuntimeException("Vaga de emprego não encontrada"));
 
-        return candidacyRepository.findByJobVacancies_id(jobId).stream().map(response -> new CandidacyResponse(response.getId(),
-                response.getCandidate().getUsername(), jobVacancies.getTitle(), jobVacancies.getDescription(), jobVacancies.getWage()
-                , jobVacancies.getArea(), jobVacancies.getContractor().getUsername(), jobVacancies.getContractor().getEmpresa(), response.getStatus()
+        return candidacyRepository.findByJobVacancies_id(jobId).stream().map(response -> new CandidacyResponse(
+                 response.getId(),response.getCandidate().getUsername(), response.getStatus()
                 )).toList();
     }
 
@@ -56,10 +55,10 @@ public class CandidacyService {
         Candidate candidate = candidateRepository.findById(candidateId)
                 .orElseThrow(() -> new RuntimeException("Candidato não encontrado"));
 
-        return candidacyRepository.findByCandidate(candidate).stream().map(response -> new CandidacyResponse(response.getId(),
-                response.getCandidate().getUsername(), response.getJobVacancies().getTitle(), response.getJobVacancies().getDescription(),
-                response.getJobVacancies().getWage() , response.getJobVacancies().getArea(),
-                response.getJobVacancies().getContractor().getUsername(), response.getJobVacancies().getContractor().getEmpresa(), response.getStatus()
+        return candidacyRepository.findByCandidate(candidate).stream().map(response -> new CandidacyResponse(
+                response.getJobVacancies().getTitle(),
+                response.getJobVacancies().getContractor().getEmpresa(),
+                response.getStatus()
         )).toList();
 
     }
@@ -77,8 +76,10 @@ public class CandidacyService {
         candidacy.setStatus(StatusCandidacy.ACEITO);
         Candidacy newCandidacy =  candidacyRepository.save(candidacy);
 
-        CandidacyResponse candidacyResponse = new CandidacyResponse(newCandidacy.getId(), newCandidacy.getCandidate().getUsername(),
-                vagas.getTitle(), vagas.getDescription(), vagas.getWage(), vagas.getArea(), vagas.getContractor().getUsername(), vagas.getContractor().getEmpresa(), newCandidacy.getStatus());
+        CandidacyResponse candidacyResponse = new CandidacyResponse(
+                newCandidacy.getId(), newCandidacy.getCandidate().getUsername(),
+                vagas.getTitle(), vagas.getDescription(), vagas.getWage(), vagas.getArea(),
+                vagas.getContractor().getUsername(), vagas.getContractor().getEmpresa(), newCandidacy.getStatus());
         return candidacyResponse;
     }
 
@@ -95,8 +96,10 @@ public class CandidacyService {
         candidacy.setStatus(StatusCandidacy.RECUSADO);
         Candidacy newCandidacy =  candidacyRepository.save(candidacy);
 
-        CandidacyResponse candidacyResponse = new CandidacyResponse(newCandidacy.getId(), newCandidacy.getCandidate().getUsername(),
-                vagas.getTitle(), vagas.getDescription(), vagas.getWage(), vagas.getArea(), vagas.getContractor().getUsername(), vagas.getContractor().getEmpresa(), newCandidacy.getStatus());
+        CandidacyResponse candidacyResponse = new CandidacyResponse(
+                newCandidacy.getId(), newCandidacy.getCandidate().getUsername(),
+                vagas.getTitle(), vagas.getDescription(), vagas.getWage(), vagas.getArea(),
+                vagas.getContractor().getUsername(), vagas.getContractor().getEmpresa(), newCandidacy.getStatus());
         return candidacyResponse;
     }
 }

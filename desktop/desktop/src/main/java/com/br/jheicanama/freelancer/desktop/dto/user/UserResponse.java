@@ -9,4 +9,11 @@ public class UserResponse {
     private String phone;
     private String email;
     private Role role;
+
+    public UserResponse(String username, String phone, String email, Role role) {
+        this.username = username;
+        this.phone = phone;
+        this.email = email;
+        this.role = role;
+    }
 }

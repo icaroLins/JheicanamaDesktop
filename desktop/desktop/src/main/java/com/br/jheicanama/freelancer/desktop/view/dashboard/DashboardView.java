@@ -105,7 +105,6 @@ public class DashboardView extends JFrame {
 
         JButton btnPerfil = new JButton("Meu Perfil");
         JButton btnCriarVaga = new JButton("Criar Vaga");
-        JButton btnGerenciar = new JButton("Gerenciar Candidatos");
         JButton btnListVagas = new JButton("Listar Vagas");
 
         btnPerfil.addActionListener(e -> {
@@ -119,16 +118,11 @@ public class DashboardView extends JFrame {
 
         btnCriarVaga.addActionListener(e -> new JobVacanciesView());
 
-        btnGerenciar.addActionListener(e ->
-                JOptionPane.showMessageDialog(this, "Gerenciar candidatos (futuro)")
-        );
-
         btnListVagas.addActionListener(e -> new JobListView());
 
         panel.add(new JLabel("Bem-vindo, contratante!", SwingConstants.CENTER));
         panel.add(btnPerfil);
         panel.add(btnCriarVaga);
-        panel.add(btnGerenciar);
         panel.add(btnListVagas);
 
         return panel;

@@ -29,22 +29,14 @@ public class ContractorService {
 
         String passworEncrypted =passwordEncoder.encode(userRequest.getPassword());
 
-        Contractor user = new Contractor();
-        user.setEmail(userRequest.getEmail());
-        user.setPassword(passworEncrypted);
-        user.setRole(userRequest.getRole());
-        user.setPhone(userRequest.getPhone());
-        user.setUsername(userRequest.getName());
-        user.setCnpj(userRequest.getCnpj());
-        user.setEmpresa(userRequest.getEmpresa());
+        Contractor user = new Contractor(
+                userRequest.getName(), passworEncrypted, userRequest.getEmail(), userRequest.getPhone(),
+                userRequest.getRole(), userRequest.getEmpresa(), userRequest.getCnpj()
+                );
 
         Contractor userSaved = contractorRepository.save(user);
-        ContractorResponse userResponse = new ContractorResponse();
-        userResponse.setEmail(userSaved.getEmail());
-        userResponse.setPhone(userSaved.getPhone());
-        userResponse.setRole(userSaved.getRole());
-        userResponse.setCnpj(userSaved.getCnpj());
-        userResponse.setEmpresa(userSaved.getEmpresa());
+        ContractorResponse userResponse = new ContractorResponse(userSaved.getUsername(), userSaved.getPhone(),
+                userSaved.getEmail(), userSaved.getRole(), userSaved.getEmpresa(), userSaved.getCnpj());
 
         return userResponse;
     }
@@ -52,13 +44,8 @@ public class ContractorService {
     public ContractorResponse searchUser(ContractorRequest userRequest) {
         Contractor user = contractorRepository.findByEmail(userRequest.getEmail());
 
-        ContractorResponse userResponse = new ContractorResponse();
-        userResponse.setEmail(user.getEmail());
-        userResponse.setPhone(user.getPhone());
-        userResponse.setRole(user.getRole());
-        userResponse.setUsername(user.getUsername());
-        userResponse.setCnpj(user.getCnpj());
-        userResponse.setEmpresa(user.getEmpresa());
+        ContractorResponse userResponse = new ContractorResponse(user.getUsername(),user.getPhone(),user.getEmail(),
+                user.getRole(),user.getEmpresa(),user.getCnpj());
         return userResponse;
     }
 }

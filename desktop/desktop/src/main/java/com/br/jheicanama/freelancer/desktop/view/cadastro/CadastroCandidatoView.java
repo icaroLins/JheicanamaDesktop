@@ -40,7 +40,6 @@ public class CadastroCandidatoView extends CadastroView {
         super("Cadastro Candidato");
     }
 
-    @Override
     protected void cadastrar() {
         try {
             CandidateService service = SpringContext.getBean(CandidateService.class);

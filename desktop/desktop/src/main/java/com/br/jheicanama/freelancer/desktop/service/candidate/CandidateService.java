@@ -13,10 +13,8 @@ import org.springframework.stereotype.Service;
 public class CandidateService {
     @Autowired
     private CandidateRepository candidateRepository;
-
     @Autowired
     private CandidateSection candidateSection;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -27,22 +25,15 @@ public class CandidateService {
 
         String passworEncrypted =passwordEncoder.encode(userRequest.getPassword());
 
-        Candidate user = new Candidate();
-        user.setEmail(userRequest.getEmail());
-        user.setPassword(passworEncrypted);
-        user.setRole(userRequest.getRole());
-        user.setPhone(userRequest.getPhone());
-        user.setUsername(userRequest.getName());
-        user.setCpf(userRequest.getCpf());
-        user.setDateOfBirth(userRequest.getBirthDate());
+        Candidate user = new Candidate(
+                userRequest.getName(),passworEncrypted,userRequest.getEmail(), userRequest.getPhone(),
+                userRequest.getRole(), userRequest.getBirthDate(), userRequest.getCpf()
+                );
 
         Candidate userSaved = candidateRepository.save(user);
-        CandidateResponse userResponse = new CandidateResponse();
-        userResponse.setEmail(userSaved.getEmail());
-        userResponse.setPhone(userSaved.getPhone());
-        userResponse.setRole(userSaved.getRole());
-        userResponse.setCpf(userSaved.getCpf());
-        userResponse.setBirthDate(userSaved.getDateOfBirth());
+        CandidateResponse userResponse = new CandidateResponse(userSaved.getUsername(),userSaved.getPhone(),
+                userSaved.getEmail(), userSaved.getRole(), userSaved.getDateOfBirth(), userSaved.getCpf()
+                );
 
         return userResponse;
     }
@@ -50,13 +41,8 @@ public class CandidateService {
     public CandidateResponse searchUser(CandidateRequest userRequest) {
         Candidate user = candidateRepository.findByEmail(userRequest.getEmail());
 
-        CandidateResponse userResponse = new CandidateResponse();
-        userResponse.setEmail(user.getEmail());
-        userResponse.setPhone(user.getPhone());
-        userResponse.setRole(user.getRole());
-        userResponse.setUsername(user.getUsername());
-        userResponse.setCpf(user.getCpf());
-        userResponse.setBirthDate(user.getDateOfBirth());
+        CandidateResponse userResponse = new CandidateResponse(user.getUsername(), user.getPhone(), user.getEmail(),
+                user.getRole(), user.getDateOfBirth(), user.getCpf());
         return userResponse;
     }
 }
